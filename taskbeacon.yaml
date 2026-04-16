@@ -1,0 +1,22 @@
+id: T000052
+slug: transitive-inference-task
+title: Transitive Inference Task
+acquisition: behavior
+variant: baseline
+cognitive_domain:
+  - reasoning
+  - learning
+maturity: draft
+version:
+  release_tag: v0.1.0-dev
+contracts:
+  psyflow_taps: v0.1.0
+evidence:
+  - references/references.yaml
+  - references/references.md
+  - references/parameter_mapping.md
+  - references/stimulus_mapping.md
+  - references/task_logic_audit.md
+  - references/task_plot_spec.yaml
+  - task_flow.png
+maintainer: []

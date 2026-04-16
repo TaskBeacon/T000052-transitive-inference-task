@@ -1,0 +1,363 @@
+# ============================================================================
+# QA config
+# - Used by: python main.py qa
+# - Scope: QA validation run only (no sim section in this file)
+# ============================================================================
+
+# === Subject Form ===========================================================
+subinfo_fields:
+  - name: subject_id
+    type: int
+    constraints:
+      min: 101
+      max: 999
+      digits: 3
+
+subinfo_mapping:
+  subject_id: Subject ID (3 digits)
+  Participant Information: Participant Information
+  registration_failed: Registration failed
+  registration_successful: Registration successful
+  invalid_input: "Invalid input for {field}"
+
+
+# === Display / Window =======================================================
+window:
+  size: [1280, 720]
+  units: pix
+  screen: 0
+  bg_color: black
+  fullscreen: false
+  monitor_width_cm: 35.5
+  monitor_distance_cm: 60
+
+
+# === Task ===================================================================
+task:
+  task_name: Transitive Inference Task
+  save_path: ./outputs/qa
+  total_blocks: 5
+  total_trials: 36
+  trial_per_block: 8
+  conditions:
+    - training_premise
+    - test_premise
+    - test_transitive
+    - test_anchor
+  condition_weights: null
+  key_list: [space, z, m]
+  response_keys: [z, m]
+  left_key: z
+  right_key: m
+  continue_key: space
+  chain_symbols: [ろ, ま, か, め, せ]
+  premise_pairs:
+    - pair_id: AB
+      correct_symbol: ろ
+      foil_symbol: ま
+    - pair_id: BC
+      correct_symbol: ま
+      foil_symbol: か
+    - pair_id: CD
+      correct_symbol: か
+      foil_symbol: め
+    - pair_id: DE
+      correct_symbol: め
+      foil_symbol: せ
+  probe_pairs:
+    transitive:
+      pair_id: BD
+      correct_symbol: ま
+      foil_symbol: め
+    anchor:
+      pair_id: AE
+      correct_symbol: ろ
+      foil_symbol: せ
+  training_block_patterns:
+    block_1:
+      cycle_count: 1
+      randomize: false
+      pair_repeats:
+        - pair_id: AB
+          repeat: 2
+        - pair_id: BC
+          repeat: 2
+        - pair_id: CD
+          repeat: 2
+        - pair_id: DE
+          repeat: 2
+    block_2:
+      cycle_count: 1
+      randomize: false
+      pair_repeats:
+        - pair_id: AB
+          repeat: 2
+        - pair_id: BC
+          repeat: 2
+        - pair_id: CD
+          repeat: 2
+        - pair_id: DE
+          repeat: 2
+    block_3:
+      cycle_count: 1
+      randomize: true
+      pair_repeats:
+        - pair_id: AB
+          repeat: 1
+        - pair_id: BC
+          repeat: 1
+        - pair_id: CD
+          repeat: 1
+        - pair_id: DE
+          repeat: 1
+    block_4:
+      cycle_count: 1
+      randomize: true
+      pair_repeats:
+        - pair_id: AB
+          repeat: 1
+        - pair_id: BC
+          repeat: 1
+        - pair_id: CD
+          repeat: 1
+        - pair_id: DE
+          repeat: 1
+  test_block_pattern:
+    cycle_count: 1
+    randomize: true
+    pair_repeats:
+      - pair_id: AB
+        repeat: 2
+      - pair_id: BC
+        repeat: 2
+      - pair_id: CD
+        repeat: 2
+      - pair_id: DE
+        repeat: 2
+      - pair_id: BD
+        repeat: 2
+      - pair_id: AE
+        repeat: 2
+  training_accuracy_threshold: 0.8
+  response_window_s: 1.8
+  fixation_duration_s: 0.25
+  feedback_duration_s: 0.35
+  iti_duration_s: 0.15
+  block_repeat_limit: 3
+  seed_mode: same_across_sub
+  overall_seed: 52052
+  delta: 0.0
+  language: English
+  voice_name: en-US-AriaNeural
+  voice_enabled: false
+  input_mode: keyboard
+  hide_cursor: true
+  force_quit_enabled: true
+  force_quit_shortcut: ctrl+q
+  enable_logging: true
+
+
+# === Timing =================================================================
+timing:
+  post_delay_ms: 1
+
+
+# === Stimuli ================================================================
+stimuli:
+  instruction_text:
+    type: text
+    text: |
+      Transitive Inference Task
+
+      QA run: same block structure, shorter timing.
+      You will learn which Hiragana symbol comes first in each pair.
+      The symbols you will see are: {chain_symbols}
+      Use Z for the left symbol and M for the right symbol.
+      Training blocks give feedback after every choice.
+      The final test has no feedback.
+
+      Training blocks repeat until every premise pair reaches {training_threshold_pct} accuracy.
+      Press SPACE to begin.
+    font: Arial
+    color: white
+    height: 26
+    wrapWidth: 1060
+    pos: [0, 18]
+
+  training_block_intro_text:
+    type: text
+    text: |
+      {block_label}
+
+      This block has {trial_count} training trials.
+      You will get feedback after each choice.
+      The block repeats until every premise pair reaches {threshold_pct} accuracy.
+
+      Press SPACE to start.
+    font: Arial
+    color: white
+    height: 28
+    wrapWidth: 1020
+    pos: [0, 0]
+
+  test_block_intro_text:
+    type: text
+    text: |
+      {block_label}
+
+      This block has {trial_count} test trials.
+      There is no feedback in the final test.
+
+      Press SPACE to start the test.
+    font: Arial
+    color: white
+    height: 28
+    wrapWidth: 1020
+    pos: [0, 0]
+
+  pair_prompt_text:
+    type: text
+    text: "Choose the symbol that comes first in the learned order."
+    font: Arial
+    color: white
+    height: 24
+    wrapWidth: 980
+    pos: [0, -245]
+
+  pair_left_symbol:
+    type: text
+    text: "{symbol}"
+    font: Meiryo
+    color: white
+    height: 78
+    pos: [-240, 0]
+
+  pair_right_symbol:
+    type: text
+    text: "{symbol}"
+    font: Meiryo
+    color: white
+    height: 78
+    pos: [240, 0]
+
+  fixation:
+    type: text
+    text: "+"
+    font: Arial
+    color: white
+    height: 54
+    pos: [0, 0]
+
+  training_feedback_correct:
+    type: text
+    text: "Correct"
+    font: Arial
+    color: "#4CAF50"
+    height: 36
+    pos: [0, 0]
+
+  training_feedback_incorrect:
+    type: text
+    text: "Incorrect"
+    font: Arial
+    color: "#E53935"
+    height: 36
+    pos: [0, 0]
+
+  training_feedback_timeout:
+    type: text
+    text: "Too slow"
+    font: Arial
+    color: "#FDD835"
+    height: 36
+    pos: [0, 0]
+
+  block_summary_text:
+    type: text
+    text: |
+      {block_label}
+
+      Premise pair accuracy:
+      {pair_accuracy_lines}
+
+      {repeat_message}
+
+      Press SPACE to advance.
+    font: Arial
+    color: white
+    height: 26
+    wrapWidth: 1040
+    pos: [0, 0]
+
+  good_bye_text:
+    type: text
+    text: |
+      Final test complete
+
+      Overall accuracy: {overall_accuracy_pct}
+      Mean correct RT: {mean_correct_rt_ms}
+      Timeouts: {timeout_count}
+
+      Press SPACE to finish.
+    font: Arial
+    color: white
+    height: 26
+    wrapWidth: 1040
+    pos: [0, 0]
+
+
+# === Triggers ===============================================================
+triggers:
+  map:
+    exp_onset: 1
+    exp_end: 2
+    block_onset: 10
+    block_end: 11
+    instruction_onset: 12
+    trial_fixation_onset: 20
+    pair_onset: 21
+    response_z: 31
+    response_m: 32
+    trial_timeout: 33
+    feedback_onset: 34
+    trial_iti_onset: 35
+    good_bye_onset: 40
+  driver:
+    type: serial_url
+    url: loop://
+    baudrate: 115200
+  timing:
+    post_delay_ms: 1
+  policy:
+    strict: false
+
+
+# === QA =====================================================================
+qa:
+  output_dir: outputs/qa
+  enable_scaling: true
+  timing_scale: 0.25
+  min_frames: 1
+  strict: false
+  max_wait_s: 15.0
+  acceptance_criteria:
+    required_columns:
+      - trial_id
+      - block_id
+      - block_idx
+      - block_attempt
+      - block_kind
+      - pair_id
+      - pair_kind
+      - condition_id
+      - trial_phase
+      - correct_symbol
+      - foil_symbol
+      - left_symbol
+      - right_symbol
+      - correct_key
+      - response_key
+      - response_rt
+      - response_correct
+      - timed_out
+      - selected_symbol

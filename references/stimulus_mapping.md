@@ -1,0 +1,15 @@
+# Stimulus Mapping
+
+## Mapping Table
+
+| Condition | Stage/Phase | Stimulus IDs | Participant-Facing Content | Source Paper ID | Evidence (quote/figure/table) | Implementation Mode | Asset References | Notes |
+|---|---|---|---|---|---|---|---|---|
+| `all` | `instruction` | `instruction_text` | Explains that the participant will learn an ordered set of five Hiragana symbols and respond with left/right keys. | W2093778263 | Methods and Figure 1 establish the five-symbol hierarchy and Z/M response mapping. | psychopy_builtin | none | Baseline instructions are paraphrased rather than quoted. |
+| `training_premise` | `pair_display` | `pair_left_symbol`, `pair_right_symbol`, `pair_prompt_text` | One premise pair from the chain `ろ/ま`, `ま/か`, `か/め`, or `め/せ`, with left/right placement randomized. | W2093778263 | Methods describe repeated training on adjacent pairs from the five-symbol hierarchy. | psychopy_builtin | none | Correct answer is the symbol earlier in the chain. |
+| `training_premise` | `feedback` | `training_feedback_correct`, `training_feedback_incorrect`, `training_feedback_timeout` | Short correctness feedback after each training response. | W2093778263 | Methods specify feedback during training; exact onscreen wording is runtime paraphrase. | psychopy_builtin | none | `Too slow` is the runtime timeout message. |
+| `test_premise` | `pair_display` | `pair_left_symbol`, `pair_right_symbol`, `pair_prompt_text` | The same premise pairs as training, but no feedback is shown. | W2093778263 | Methods describe a final test block using the learned premise pairs. | psychopy_builtin | none | Used to measure retained premise accuracy. |
+| `test_transitive` | `pair_display` | `pair_left_symbol`, `pair_right_symbol`, `pair_prompt_text` | Novel transitive pair `ま/め` (BD), left/right randomized. | W2093778263 | Methods include the BD inference probe at test. | psychopy_builtin | none | Core transitive-inference condition. |
+| `test_anchor` | `pair_display` | `pair_left_symbol`, `pair_right_symbol`, `pair_prompt_text` | Anchor/control pair `ろ/せ` (AE), left/right randomized. | W2093778263 | Methods include the AE control pair at test. | psychopy_builtin | none | End-anchor comparison. |
+| `all` | `block_intro` | `block_intro_text` | Block-specific reminders about trial count, feedback, and the repeat criterion. | W2093778263 | The repeat-until-criterion training structure is taken from the methods; the wording is runtime-generated. | psychopy_builtin | none | Intro scaffolding added for usability. |
+| `all` | `block_summary` | `block_summary_text` | Block accuracy summary and repeat/advance notice. | W2093778263 | The training criterion requires block-level accuracy evaluation. | psychopy_builtin | none | Summary screen is an executable wrapper around the protocol rule. |
+| `all` | `good_bye` | `good_bye_text` | Closing message after the final test. | W2093778263 | Runtime closing screen not specified by the paper; added for completion. | psychopy_builtin | none | Usability-only screen. |

@@ -1,0 +1,74 @@
+task_id: T000052-transitive-inference-task
+generated_at: '2026-04-16T17:22:35Z'
+selection_policy: curated_transitive_inference
+citation_threshold: 100
+papers:
+- id: W2609154042
+  title: A map of abstract relational knowledge in the human hippocampal-entorhinal
+    cortex
+  authors:
+  - Mona M. Garvert
+  - Raymond J. Dolan
+  - Timothy E.J. Behrens
+  year: 2017
+  journal: eLife
+  doi_or_url: https://doi.org/10.7554/elife.17086
+  citation_count: 409
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2164512113
+  title: Representation of stable social dominance relations by human infants
+  authors:
+  - Olivier Mascaro
+  - Gergely Csibra
+  year: 2012
+  journal: Proceedings of the National Academy of Sciences
+  doi_or_url: https://doi.org/10.1073/pnas.1113194109
+  citation_count: 254
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2116209672
+  title: Frontal and Parietal Lobe Activation during Transitive Inference in Humans
+  authors:
+  - Bettina D. Acuna
+  year: 2002
+  journal: Cerebral Cortex
+  doi_or_url: https://doi.org/10.1093/cercor/12.12.1312
+  citation_count: 190
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2093778263
+  title: 'Relational learning with and without awareness: Transitive inference using
+    nonverbal stimuli in humans'
+  authors:
+  - Anthony J. Greene
+  - Barbara A. Spellman
+  - William B. Levy
+  - Jeffery A. Dusek
+  - Howard Eichenbaum
+  year: 2001
+  journal: Memory & Cognition
+  doi_or_url: https://doi.org/10.3758/bf03196418
+  citation_count: 100
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
