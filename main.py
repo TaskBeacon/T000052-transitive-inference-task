@@ -5,6 +5,7 @@ import pandas as pd
 from psychopy import core
 
 from psyflow import (
+    BlockUnit,
     StimBank,
     StimUnit,
     SubInfo,
@@ -133,20 +134,32 @@ def _run_block(
                 repeat_limit=repeat_limit,
             )
 
-            attempt_trials: list[dict] = []
-            for trial_spec in block_trials:
-                trial_data = run_trial(
-                    win,
-                    kb,
-                    settings,
-                    condition={**trial_spec, "block_attempt": block_attempt},
-                    stim_bank=stim_bank,
-                    trigger_runtime=trigger_runtime,
+            attempt_conditions = [{**trial_spec, "block_attempt": block_attempt} for trial_spec in block_trials]
+            attempt_block = (
+                BlockUnit(
                     block_id=attempt_block_id,
                     block_idx=block_idx,
+                    settings=settings,
+                    window=win,
+                    keyboard=kb,
+                    n_trials=len(attempt_conditions),
                 )
-                attempt_trials.append(trial_data)
-                all_data.append(trial_data)
+                .add_condition(attempt_conditions)
+                .run_trial(
+                    lambda win_arg, kb_arg, settings_arg, condition_arg: run_trial(
+                        win_arg,
+                        kb_arg,
+                        settings_arg,
+                        condition=condition_arg,
+                        stim_bank=stim_bank,
+                        trigger_runtime=trigger_runtime,
+                        block_id=attempt_block_id,
+                        block_idx=block_idx,
+                    )
+                )
+            )
+            attempt_trials = attempt_block.get_all_data()
+            all_data.extend(attempt_trials)
 
             summary = summarize_block_trials(attempt_trials, threshold=threshold)
             trigger_runtime.send(settings.triggers.get("block_end"))
@@ -214,18 +227,31 @@ def _run_block(
             trial_count=len(block_trials),
         )
 
-        for trial_spec in block_trials:
-            trial_data = run_trial(
-                win,
-                kb,
-                settings,
-                condition={**trial_spec, "block_attempt": 1},
-                stim_bank=stim_bank,
-                trigger_runtime=trigger_runtime,
+        test_conditions = [{**trial_spec, "block_attempt": 1} for trial_spec in block_trials]
+        test_block = (
+            BlockUnit(
                 block_id=block_id,
                 block_idx=block_idx,
+                settings=settings,
+                window=win,
+                keyboard=kb,
+                n_trials=len(test_conditions),
             )
-            all_data.append(trial_data)
+            .add_condition(test_conditions)
+            .run_trial(
+                lambda win_arg, kb_arg, settings_arg, condition_arg: run_trial(
+                    win_arg,
+                    kb_arg,
+                    settings_arg,
+                    condition=condition_arg,
+                    stim_bank=stim_bank,
+                    trigger_runtime=trigger_runtime,
+                    block_id=block_id,
+                    block_idx=block_idx,
+                )
+            )
+        )
+        all_data.extend(test_block.get_all_data())
 
         trigger_runtime.send(settings.triggers.get("block_end"))
 
